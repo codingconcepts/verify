@@ -14,6 +14,11 @@ import (
 )
 
 func main() {
+	if len(os.Args) < 2 {
+		fmt.Println("Usage: verify [PATH]")
+		os.Exit(2)
+	}
+
 	algos := []algo{
 		algo{name: "MD5       ", hasher: md5.New()},
 		algo{name: "SHA1      ", hasher: sha1.New()},
@@ -25,7 +30,7 @@ func main() {
 		algo{name: "SHA512/384", hasher: sha512.New384()},
 	}
 
-	if err := hashFile("README.md", algos...); err != nil {
+	if err := hashFile(os.Args[1], algos...); err != nil {
 		log.Fatal(err)
 	}
 }
